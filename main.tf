@@ -99,8 +99,28 @@ resource "aws_lb_target_group" "main" {
         }
       )
     }
+
+    tag_specifications {
+      resource_type = "volume"
+
+      tags = merge(
+        local.common_tags,
+        {
+          Name = "${local.common_name_suffix}-${var.component}"
+        }
+      )
+    }
+
+    tags = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name_suffix}-${var.component}"
+      }
+    )
    
    }
+
+  
 
    resource "aws_autoscaling_group" "main" {
     name = "${local.common_name_suffix}-${var.component}"
